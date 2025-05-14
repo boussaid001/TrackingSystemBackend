@@ -1,0 +1,7 @@
+/**/*.js
+data/
+docs/
+node_modules/
+bin/
+./github/
+__tests/

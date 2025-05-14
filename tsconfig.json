@@ -1,0 +1,49 @@
+{
+    "ts-node": {
+        "require": ["tsconfig-paths/register"]
+    },
+    "compilerOptions": {
+        "baseUrl": "./",
+        "paths": {
+            //Src folders
+            "@src/*": ["src/*"],
+            "@models/*": ["src/models/*"],
+            "@config": ["src/config"],
+            //API folders
+            "@controllers/*": ["src/API/controllers/*"],
+            "@services/*": ["src/API/services/*"],
+            "@routes": ["src/API/routes"],
+            //Shared folders
+            "@docs": ["src/shared/docs"],
+            "@fixture/*": ["src/shared/fixture/*"],
+            "@middleware/*": ["src/shared/middleware/*"],
+            "@providers/*": ["src/providers/*"],
+            "@interfaces/*": ["src/shared/interfaces/*"],
+            "@validations/*": ["src/shared/validations/*"],
+            "@helpers/*": ["src/shared/helpers/*"],
+            "@constants": ["src/shared/constants"]
+        },
+        "esModuleInterop": true,
+        "target": "es2022",
+        "module": "node16",
+        "lib": ["ES2022"],
+        "moduleResolution": "node16",
+        "rootDir": ".",
+        "outDir": "build",
+        "allowSyntheticDefaultImports": true,
+        "importHelpers": true,
+        "alwaysStrict": true,
+        "sourceMap": true,
+        "forceConsistentCasingInFileNames": true,
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitReturns": true,
+        "noUnusedLocals": false,
+        "noUnusedParameters": true,
+        "noImplicitAny": false,
+        "noImplicitThis": false,
+        "strictNullChecks": true,
+        "resolveJsonModule": true
+    },
+
+    "include": ["src/**/*", "__tests__/**/*", "jest.config.js"]
+}

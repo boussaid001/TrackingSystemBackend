@@ -1,0 +1,804 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Simple   API",
+        "description": "This is a simple API",
+        "contact": {
+            "email": "ellili.mohamed0@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:5000",
+            "description": "Development server"
+        }
+    ],
+    "tags": [
+        {
+            "name": "Documents",
+            "description": "Endpoints related to document management"
+        },
+        {
+            "name": "Packages",
+            "description": "Endpoints related to package management"
+        },
+        {
+            "name": "Pictures",
+            "description": "Endpoints related to pictures management"
+        },
+        {
+            "name": "Traceability",
+            "description": "Endpoints related to traceability management"
+        },
+        {
+            "name": "LineType",
+            "description": "Endpoints related to linetype management"
+        }
+    ],
+    "paths": {
+        "/create/{nom}": {
+            "post": {
+                "tags": ["Documents"],
+                "summary": "Create a new document",
+                "description": "Creates a new document for the model specified by {nom}.",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "nom",
+                        "required": true,
+                        "description": "The name of the model for which to create the document.",
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "package",
+                                "litigation",
+                                "product",
+                                "lineType",
+                                "flashingStatus",
+                                "traceability",
+                                "picture"
+                            ]
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Document created successfully"
+                    }
+                }
+            }
+        },
+        "/createBanch/{nom}": {
+            "post": {
+                "tags": ["Documents"],
+                "summary": "Create a new list of documents",
+                "description": "Creates a new list of documents for the model specified by {nom}.",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "nom",
+                        "required": true,
+                        "description": "The name of the model for which to create the list.",
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "package",
+                                "litigation",
+                                "product",
+                                "lineType",
+                                "flashingStatus",
+                                "traceability",
+                                "picture"
+                            ]
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "array"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "All Data has been added Successfully"
+                    }
+                }
+            }
+        },
+
+        "/update/{nom}/{id}": {
+            "put": {
+                "tags": ["Documents"],
+                "summary": "Update a document",
+                "description": "Updates a document of the model specified by {nom} with the ID specified by {id}.",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "nom",
+                        "required": true,
+                        "description": "The name of the model of the document to update.",
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "package",
+                                "litigation",
+                                "product",
+                                "lineType",
+                                "flashingStatus",
+                                "traceability",
+                                "picture"
+                            ]
+                        }
+                    },
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "description": "The ID of the document to update.",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Document updated successfully"
+                    }
+                }
+            }
+        },
+        "/get/{nom}/{id}": {
+            "get": {
+                "tags": ["Documents"],
+                "summary": "Get a document by ID",
+                "description": "Retrieves a document of the model specified by {nom} with the ID specified by {id}.",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "nom",
+                        "required": true,
+                        "description": "The name of the model of the document to retrieve.",
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "package",
+                                "litigation",
+                                "product",
+                                "lineType",
+                                "flashingStatus",
+                                "traceability",
+                                "picture"
+                            ]
+                        }
+                    },
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "description": "The ID of the document to retrieve.",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Document retrieved successfully"
+                    },
+                    "404": {
+                        "description": "Document not found"
+                    }
+                }
+            }
+        },
+        "/delete/{nom}/{id}": {
+            "delete": {
+                "tags": ["Documents"],
+                "summary": "Delete a document",
+                "description": "Deletes a document of the model specified by {nom} with the ID specified by {id}.",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "nom",
+                        "required": true,
+                        "description": "The name of the model of the document to delete.",
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "package",
+                                "litigation",
+                                "product",
+                                "lineType",
+                                "flashingStatus",
+                                "traceability",
+                                "picture"
+                            ]
+                        }
+                    },
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "description": "The ID of the document to delete.",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Document deleted successfully"
+                    }
+                }
+            }
+        },
+        "/reactive/{nom}/{id}": {
+            "put": {
+                "tags": ["Documents"],
+                "summary": "Reactivate a deleted document",
+                "description": "Reactivates a document of the model specified by {nom} that was previously deleted, using the ID specified by {id}.",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "nom",
+                        "required": true,
+                        "description": "The name of the model of the document to reactivate.",
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "package",
+                                "litigation",
+                                "product",
+                                "lineType",
+                                "flashingStatus",
+                                "traceability",
+                                "picture"
+                            ]
+                        }
+                    },
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "description": "The ID of the document to reactivate.",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Document reactivated successfully"
+                    },
+                    "404": {
+                        "description": "Document not found"
+                    }
+                }
+            }
+        },
+        "/package/filter": {
+            "post": {
+                "tags": ["Packages"],
+                "summary": "Filter packages",
+                "description": "Returns a filtered list of packages based on criteria specified in the request body.",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Filtered list of packages returned successfully"
+                    },
+                    "400": {
+                        "description": "Invalid request, filtering criteria are missing or incorrect"
+                    }
+                }
+            }
+        },
+        "/upload": {
+            "post": {
+                "tags": ["Pictures"],
+                "summary": "Upload a picture",
+                "description": "Uploads a picture to the server and saves it to AWS S3.",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "file": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Picture uploaded successfully"
+                    },
+                    "400": {
+                        "description": "Bad request, missing or invalid parameters"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/getTraceabilityByFlashinDate/{flashedAt}": {
+            "get": {
+                "tags": ["Traceability"],
+                "summary": "Get traceability by flash date",
+                "description": "Retrieves traceability records based on the flashed date.",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "flashedAt",
+                        "required": true,
+                        "description": "The flashed date in ISO format (e.g., '2024-03-26').",
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Traceability records retrieved successfully"
+                    },
+                    "400": {
+                        "description": "Bad request, invalid flashedAt parameter"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/GetLineTypeByCode/{code}": {
+            "get": {
+                "tags": ["LineType"],
+                "summary": "Get line type by code",
+                "description": "Retrieves a line type by its unique code.",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "code",
+                        "required": true,
+                        "description": "The unique code of the line type.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Line type retrieved successfully"
+                    },
+                    "404": {
+                        "description": "Line type not found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+
+        "/download/{fileName}": {
+            "get": {
+                "tags": ["Pictures"],
+                "summary": "Download a picture",
+                "description": "Downloads a picture by fileName.",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "fileName",
+                        "required": true,
+                        "description": "The URL of the picture to download.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Picture downloaded successfully",
+                        "content": {
+                            "image/png": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "binary"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Picture not found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/addPackage": {
+            "post": {
+                "tags": ["Packages"],
+                "summary": "Add a new package",
+                "description": "Add a new package with associated products.",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "bareCode": {
+                                        "type": "string"
+                                    },
+                                    "code": {
+                                        "type": "string"
+                                    },
+                                    "codeCourse": {
+                                        "type": "string"
+                                    },
+                                    "label": {
+                                        "type": "string"
+                                    },
+                                    "lastMsgId": {
+                                        "type": "string"
+                                    },
+                                    "quantity": {
+                                        "type": "number"
+                                    },
+                                    "sequenceNumber": {
+                                        "type": "number"
+                                    },
+                                    "storeCmdNumber": {
+                                        "type": "number"
+                                    },
+                                    "storeNumber": {
+                                        "type": "number"
+                                    },
+                                    "traceabilityType": {
+                                        "type": "string",
+                                        "enum": ["E", "F", "P"]
+                                    },
+                                    "lineTypeID": {
+                                        "type": "string"
+                                    },
+                                    "groupeId": {
+                                        "type": "string"
+                                    },
+                                    "receptionNumber": {
+                                        "type": "number"
+                                    },
+                                    "supplier": {
+                                        "type": "string"
+                                    },
+                                    "warehouseId": {
+                                        "type": "string"
+                                    },
+                                    "receptionType": {
+                                        "type": "string"
+                                    },
+                                    "freightId": {
+                                        "type": "string"
+                                    },
+                                    "height": {
+                                        "type": "number"
+                                    },
+                                    "length": {
+                                        "type": "number"
+                                    },
+                                    "volume": {
+                                        "type": "number"
+                                    },
+                                    "weight": {
+                                        "type": "number"
+                                    },
+                                    "width": {
+                                        "type": "number"
+                                    },
+                                    "sku": {
+                                        "type": "string"
+                                    },
+                                    "products": {
+                                        "type": "array",
+                                        "items": {
+                                            "label": {
+                                                "type": "string"
+                                            },
+                                            "volume": {
+                                                "type": "number"
+                                            },
+                                            "weight": {
+                                                "type": "number"
+                                            },
+                                            "typology": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "TYPOLOGY_GENERIC",
+                                                    "TYPOLOGY_FRESH",
+                                                    "TYPOLOGY_FROZEN",
+                                                    "TYPOLOGY_DANGEROUS",
+                                                    "TYPOLOGY_VOLUMINOUS",
+                                                    "TYPOLOGY_FRAGILE",
+                                                    "TYPOLOGY_VOLUMINOUS_FRAGILE"
+                                                ]
+                                            },
+                                            "state": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "Fonctionnel",
+                                                    "Réparable",
+                                                    "Bon pour recyclage",
+                                                    "ORIG_PACK",
+                                                    "DAMAGE",
+                                                    "ASSEMBLED"
+                                                ]
+                                            }
+                                        }
+                                    }
+                                },
+                                "required": ["traceabilityType"],
+                                "example": {
+                                    "bareCode": "ABCD1234",
+                                    "codeCourse": "COURSE123",
+                                    "label": "Sample Label",
+                                    "lastMsgId": "MSG123",
+                                    "quantity": 10,
+                                    "sequenceNumber": 1,
+                                    "storeCmdNumber": 1001,
+                                    "storeNumber": 101,
+                                    "traceabilityType": "E",
+                                    "lineTypeID": 1,
+                                    "groupeId": "GROUP123",
+                                    "receptionNumber": 500,
+                                    "supplier": "SupplierName",
+                                    "warehouseId": "Warehouse123",
+                                    "receptionType": "TypeA",
+                                    "freightId": "Freight123",
+                                    "height": 10.5,
+                                    "length": 20,
+                                    "volume": 300,
+                                    "weight": 150,
+                                    "width": 15,
+                                    "sku": "SKU123",
+                                    "products": [
+                                        {
+                                            "label": "Product Label",
+                                            "volume": 50,
+                                            "weight": 25,
+                                            "typology": "TYPOLOGY_GENERIC",
+                                            "state": "Réparable"
+                                        },
+                                        {
+                                            "label": "Product Label 2",
+                                            "volume": 70,
+                                            "weight": 30,
+                                            "typology": "TYPOLOGY_GENERIC",
+                                            "state": "Fonctionnel"
+                                        }
+                                    ]
+                                }
+                            }
+                        },
+                        "responses": {
+                            "200": {
+                                "description": "Package created successfully"
+                            },
+                            "400": {
+                                "description": "Invalid request, check the request body"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/addTraceability": {
+            "post": {
+                "tags": ["Traceability"],
+                "summary": "Add a new traceability",
+                "description": "Add traceability information for a package.",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "litigation": {
+                                        "type": "object",
+                                        "properties": {
+                                            "comment": {
+                                                "type": "string"
+                                            },
+                                            "reason": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "Casse transport",
+                                                    "Teinte",
+                                                    "Manquant",
+                                                    "Taches"
+                                                ]
+                                            },
+                                            "traceabilityID": {
+                                                "type": "number"
+                                            },
+                                            "step": {
+                                                "type": "number"
+                                            },
+                                            "type": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "Magasin",
+                                                    "Fournisseur",
+                                                    "Livreur",
+                                                    "Entrepôt"
+                                                ]
+                                            }
+                                        },
+                                        "required": ["reason", "type"]
+                                    },
+                                    "flashingStatusId": {
+                                        "type": "number"
+                                    },
+                                    "step": {
+                                        "type": "number"
+                                    },
+                                    "chauffeurId": {
+                                        "type": "number"
+                                    },
+                                    "collabId": {
+                                        "type": "number"
+                                    },
+                                    "source": {
+                                        "type": "string",
+                                        "enum": [
+                                            "Cloture",
+                                            "Groupe",
+                                            "Forest",
+                                            "ScanLog",
+                                            "Inheritance",
+                                            "Corner",
+                                            "EDI"
+                                        ]
+                                    },
+                                    "codeRayon": {
+                                        "type": "string"
+                                    },
+                                    "comment": {
+                                        "type": "string"
+                                    },
+                                    "packageId": {
+                                        "type": "number"
+                                    }
+                                },
+                                "required": ["source"],
+                                "example": {
+                                    "litigation": {
+                                        "comment": "This is a sample comment",
+                                        "reason": "Casse transport",
+                                        "traceabilityID": 1,
+                                        "step": 2,
+                                        "type": "Magasin"
+                                    },
+                                    "flashingStatusId": 1,
+                                    "step": 3,
+                                    "chauffeurId": 123,
+                                    "collabId": 456,
+                                    "source": "Cloture",
+                                    "codeRayon": "ABCD1234",
+                                    "comment": "This is a sample comment",
+                                    "packageId": 1
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "traceability information added successfully"
+                    },
+                    "400": {
+                        "description": "Invalid request, check the request body"
+                    }
+                }
+            }
+        },
+
+        "/GetTraceabilityByPackage/{packageId}": {
+            "get": {
+                "tags": ["Traceability"],
+                "summary": "Get traceability information by package ID",
+                "description": "Retrieve traceability information for a package based on the package ID.",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "description": "ID of the package.",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Tracability information retrieved successfully"
+                    },
+                    "404": {
+                        "description": "Package not found"
+                    }
+                }
+            }
+        },
+
+        "/GetTraceabilityByUser/{userId}": {
+            "get": {
+                "tags": ["Traceability"],
+                "summary": "Get traceability information by user ID",
+                "description": "Retrieve traceability information based on the user ID.",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "description": "ID of the user.",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Tracability information retrieved successfully"
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                }
+            }
+        }
+    },
+    "components": {}
+}
