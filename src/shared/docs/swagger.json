@@ -1,804 +1,1408 @@
 {
-    "openapi": "3.0.0",
-    "info": {
-        "title": "Simple   API",
-        "description": "This is a simple API",
-        "contact": {
-            "email": "ellili.mohamed0@gmail.com"
-        },
-        "license": {
-            "name": "Apache 2.0",
-            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
-        },
-        "version": "1.0.0"
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API Documentation",
+    "description": "API documentation for the backend services",
+    "version": "1.0.0",
+    "contact": {
+      "email": "admin@example.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "/",
+      "description": "Current server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Generic",
+      "description": "Generic CRUD operations"
     },
-    "servers": [
-        {
-            "url": "http://localhost:5000",
-            "description": "Development server"
+    {
+      "name": "Package",
+      "description": "Package operations"
+    },
+    {
+      "name": "Picture",
+      "description": "Picture operations"
+    },
+    {
+      "name": "Traceability",
+      "description": "Traceability operations"
+    },
+    {
+      "name": "LineType",
+      "description": "LineType operations"
+    }
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "tags": ["Generic"],
+        "summary": "Root endpoint",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
         }
-    ],
-    "tags": [
-        {
-            "name": "Documents",
-            "description": "Endpoints related to document management"
+      }
+    },
+    "/create/{nom}": {
+      "post": {
+        "tags": ["Generic"],
+        "summary": "Create a document",
+        "parameters": [
+          {
+            "name": "nom",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Model name"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          },
+          "required": true
         },
-        {
-            "name": "Packages",
-            "description": "Endpoints related to package management"
-        },
-        {
-            "name": "Pictures",
-            "description": "Endpoints related to pictures management"
-        },
-        {
-            "name": "Traceability",
-            "description": "Endpoints related to traceability management"
-        },
-        {
-            "name": "LineType",
-            "description": "Endpoints related to linetype management"
+        "responses": {
+          "200": {
+            "description": "Document created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
-    ],
-    "paths": {
-        "/create/{nom}": {
-            "post": {
-                "tags": ["Documents"],
-                "summary": "Create a new document",
-                "description": "Creates a new document for the model specified by {nom}.",
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "nom",
-                        "required": true,
-                        "description": "The name of the model for which to create the document.",
-                        "schema": {
-                            "type": "string",
-                            "enum": [
-                                "package",
-                                "litigation",
-                                "product",
-                                "lineType",
-                                "flashingStatus",
-                                "traceability",
-                                "picture"
-                            ]
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Document created successfully"
-                    }
-                }
+      }
+    },
+    "/update/{nom}/{id}": {
+      "put": {
+        "tags": ["Generic"],
+        "summary": "Update a document",
+        "parameters": [
+          {
+            "name": "nom",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Model name"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Document ID"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
             }
+          },
+          "required": true
         },
-        "/createBanch/{nom}": {
-            "post": {
-                "tags": ["Documents"],
-                "summary": "Create a new list of documents",
-                "description": "Creates a new list of documents for the model specified by {nom}.",
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "nom",
-                        "required": true,
-                        "description": "The name of the model for which to create the list.",
-                        "schema": {
-                            "type": "string",
-                            "enum": [
-                                "package",
-                                "litigation",
-                                "product",
-                                "lineType",
-                                "flashingStatus",
-                                "traceability",
-                                "picture"
-                            ]
-                        }
+        "responses": {
+          "200": {
+            "description": "Document updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object"
                     }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "array"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "All Data has been added Successfully"
-                    }
+                  }
                 }
+              }
             }
-        },
-
-        "/update/{nom}/{id}": {
-            "put": {
-                "tags": ["Documents"],
-                "summary": "Update a document",
-                "description": "Updates a document of the model specified by {nom} with the ID specified by {id}.",
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "nom",
-                        "required": true,
-                        "description": "The name of the model of the document to update.",
-                        "schema": {
-                            "type": "string",
-                            "enum": [
-                                "package",
-                                "litigation",
-                                "product",
-                                "lineType",
-                                "flashingStatus",
-                                "traceability",
-                                "picture"
-                            ]
-                        }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object"
                     },
-                    {
-                        "in": "path",
-                        "name": "id",
-                        "required": true,
-                        "description": "The ID of the document to update.",
-                        "schema": {
-                            "type": "number"
-                        }
+                    "message": {
+                      "type": "string"
                     }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Document updated successfully"
-                    }
+                  }
                 }
+              }
             }
-        },
-        "/get/{nom}/{id}": {
-            "get": {
-                "tags": ["Documents"],
-                "summary": "Get a document by ID",
-                "description": "Retrieves a document of the model specified by {nom} with the ID specified by {id}.",
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "nom",
-                        "required": true,
-                        "description": "The name of the model of the document to retrieve.",
-                        "schema": {
-                            "type": "string",
-                            "enum": [
-                                "package",
-                                "litigation",
-                                "product",
-                                "lineType",
-                                "flashingStatus",
-                                "traceability",
-                                "picture"
-                            ]
-                        }
-                    },
-                    {
-                        "in": "path",
-                        "name": "id",
-                        "required": true,
-                        "description": "The ID of the document to retrieve.",
-                        "schema": {
-                            "type": "number"
-                        }
+          }
+        }
+      }
+    },
+    "/get/{nom}/{id}": {
+      "get": {
+        "tags": ["Generic"],
+        "summary": "Get a document by ID",
+        "parameters": [
+          {
+            "name": "nom",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Model name"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Document ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Document retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object"
                     }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Document retrieved successfully"
-                    },
-                    "404": {
-                        "description": "Document not found"
-                    }
+                  }
                 }
+              }
             }
-        },
-        "/delete/{nom}/{id}": {
-            "delete": {
-                "tags": ["Documents"],
-                "summary": "Delete a document",
-                "description": "Deletes a document of the model specified by {nom} with the ID specified by {id}.",
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "nom",
-                        "required": true,
-                        "description": "The name of the model of the document to delete.",
-                        "schema": {
-                            "type": "string",
-                            "enum": [
-                                "package",
-                                "litigation",
-                                "product",
-                                "lineType",
-                                "flashingStatus",
-                                "traceability",
-                                "picture"
-                            ]
-                        }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object"
                     },
-                    {
-                        "in": "path",
-                        "name": "id",
-                        "required": true,
-                        "description": "The ID of the document to delete.",
-                        "schema": {
-                            "type": "number"
-                        }
+                    "message": {
+                      "type": "string"
                     }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Document deleted successfully"
-                    }
+                  }
                 }
+              }
             }
-        },
-        "/reactive/{nom}/{id}": {
-            "put": {
-                "tags": ["Documents"],
-                "summary": "Reactivate a deleted document",
-                "description": "Reactivates a document of the model specified by {nom} that was previously deleted, using the ID specified by {id}.",
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "nom",
-                        "required": true,
-                        "description": "The name of the model of the document to reactivate.",
-                        "schema": {
-                            "type": "string",
-                            "enum": [
-                                "package",
-                                "litigation",
-                                "product",
-                                "lineType",
-                                "flashingStatus",
-                                "traceability",
-                                "picture"
-                            ]
-                        }
-                    },
-                    {
-                        "in": "path",
-                        "name": "id",
-                        "required": true,
-                        "description": "The ID of the document to reactivate.",
-                        "schema": {
-                            "type": "number"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Document reactivated successfully"
-                    },
-                    "404": {
-                        "description": "Document not found"
-                    }
+          }
+        }
+      }
+    },
+    "/createBanch/{nom}": {
+      "post": {
+        "tags": ["Generic"],
+        "summary": "Create multiple documents",
+        "parameters": [
+          {
+            "name": "nom",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Model name"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object"
                 }
+              }
             }
+          },
+          "required": true
         },
-        "/package/filter": {
-            "post": {
-                "tags": ["Packages"],
-                "summary": "Filter packages",
-                "description": "Returns a filtered list of packages based on criteria specified in the request body.",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Filtered list of packages returned successfully"
+        "responses": {
+          "200": {
+            "description": "Documents created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
                     },
-                    "400": {
-                        "description": "Invalid request, filtering criteria are missing or incorrect"
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
                     }
+                  }
                 }
+              }
             }
-        },
-        "/upload": {
-            "post": {
-                "tags": ["Pictures"],
-                "summary": "Upload a picture",
-                "description": "Uploads a picture to the server and saves it to AWS S3.",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "multipart/form-data": {
-                            "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "file": {
-                                        "type": "string",
-                                        "format": "binary"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Picture uploaded successfully"
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object"
                     },
-                    "400": {
-                        "description": "Bad request, missing or invalid parameters"
-                    },
-                    "500": {
-                        "description": "Internal server error"
+                    "message": {
+                      "type": "string"
                     }
+                  }
                 }
+              }
             }
-        },
-        "/getTraceabilityByFlashinDate/{flashedAt}": {
-            "get": {
-                "tags": ["Traceability"],
-                "summary": "Get traceability by flash date",
-                "description": "Retrieves traceability records based on the flashed date.",
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "flashedAt",
-                        "required": true,
-                        "description": "The flashed date in ISO format (e.g., '2024-03-26').",
-                        "schema": {
-                            "type": "string",
-                            "format": "date"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Traceability records retrieved successfully"
+          }
+        }
+      }
+    },
+    "/delete/{nom}/{id}": {
+      "delete": {
+        "tags": ["Generic"],
+        "summary": "Soft delete a document",
+        "parameters": [
+          {
+            "name": "nom",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Model name"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Document ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Document soft deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
                     },
-                    "400": {
-                        "description": "Bad request, invalid flashedAt parameter"
-                    },
-                    "500": {
-                        "description": "Internal server error"
+                    "data": {
+                      "type": "object"
                     }
+                  }
                 }
+              }
             }
-        },
-        "/GetLineTypeByCode/{code}": {
-            "get": {
-                "tags": ["LineType"],
-                "summary": "Get line type by code",
-                "description": "Retrieves a line type by its unique code.",
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "code",
-                        "required": true,
-                        "description": "The unique code of the line type.",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Line type retrieved successfully"
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object"
                     },
-                    "404": {
-                        "description": "Line type not found"
-                    },
-                    "500": {
-                        "description": "Internal server error"
+                    "message": {
+                      "type": "string"
                     }
+                  }
                 }
+              }
             }
-        },
-
-        "/download/{fileName}": {
-            "get": {
-                "tags": ["Pictures"],
-                "summary": "Download a picture",
-                "description": "Downloads a picture by fileName.",
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "fileName",
-                        "required": true,
-                        "description": "The URL of the picture to download.",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Picture downloaded successfully",
-                        "content": {
-                            "image/png": {
-                                "schema": {
-                                    "type": "string",
-                                    "format": "binary"
-                                }
-                            }
-                        }
+          }
+        }
+      }
+    },
+    "/reactive/{nom}/{id}": {
+      "put": {
+        "tags": ["Generic"],
+        "summary": "Reactivate a soft deleted document",
+        "parameters": [
+          {
+            "name": "nom",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Model name"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Document ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Document reactivated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
                     },
-                    "404": {
-                        "description": "Picture not found"
-                    },
-                    "500": {
-                        "description": "Internal server error"
+                    "data": {
+                      "type": "object"
                     }
+                  }
                 }
+              }
             }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/package/filter": {
+      "post": {
+        "tags": ["Package"],
+        "summary": "Get packages by filter",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "filter": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
         },
-        "/addPackage": {
-            "post": {
-                "tags": ["Packages"],
-                "summary": "Add a new package",
-                "description": "Add a new package with associated products.",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "bareCode": {
-                                        "type": "string"
-                                    },
-                                    "code": {
-                                        "type": "string"
-                                    },
-                                    "codeCourse": {
-                                        "type": "string"
-                                    },
-                                    "label": {
-                                        "type": "string"
-                                    },
-                                    "lastMsgId": {
-                                        "type": "string"
-                                    },
-                                    "quantity": {
-                                        "type": "number"
-                                    },
-                                    "sequenceNumber": {
-                                        "type": "number"
-                                    },
-                                    "storeCmdNumber": {
-                                        "type": "number"
-                                    },
-                                    "storeNumber": {
-                                        "type": "number"
-                                    },
-                                    "traceabilityType": {
-                                        "type": "string",
-                                        "enum": ["E", "F", "P"]
-                                    },
-                                    "lineTypeID": {
-                                        "type": "string"
-                                    },
-                                    "groupeId": {
-                                        "type": "string"
-                                    },
-                                    "receptionNumber": {
-                                        "type": "number"
-                                    },
-                                    "supplier": {
-                                        "type": "string"
-                                    },
-                                    "warehouseId": {
-                                        "type": "string"
-                                    },
-                                    "receptionType": {
-                                        "type": "string"
-                                    },
-                                    "freightId": {
-                                        "type": "string"
-                                    },
-                                    "height": {
-                                        "type": "number"
-                                    },
-                                    "length": {
-                                        "type": "number"
-                                    },
-                                    "volume": {
-                                        "type": "number"
-                                    },
-                                    "weight": {
-                                        "type": "number"
-                                    },
-                                    "width": {
-                                        "type": "number"
-                                    },
-                                    "sku": {
-                                        "type": "string"
-                                    },
-                                    "products": {
-                                        "type": "array",
-                                        "items": {
-                                            "label": {
-                                                "type": "string"
-                                            },
-                                            "volume": {
-                                                "type": "number"
-                                            },
-                                            "weight": {
-                                                "type": "number"
-                                            },
-                                            "typology": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "TYPOLOGY_GENERIC",
-                                                    "TYPOLOGY_FRESH",
-                                                    "TYPOLOGY_FROZEN",
-                                                    "TYPOLOGY_DANGEROUS",
-                                                    "TYPOLOGY_VOLUMINOUS",
-                                                    "TYPOLOGY_FRAGILE",
-                                                    "TYPOLOGY_VOLUMINOUS_FRAGILE"
-                                                ]
-                                            },
-                                            "state": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "Fonctionnel",
-                                                    "Réparable",
-                                                    "Bon pour recyclage",
-                                                    "ORIG_PACK",
-                                                    "DAMAGE",
-                                                    "ASSEMBLED"
-                                                ]
-                                            }
-                                        }
-                                    }
-                                },
-                                "required": ["traceabilityType"],
-                                "example": {
-                                    "bareCode": "ABCD1234",
-                                    "codeCourse": "COURSE123",
-                                    "label": "Sample Label",
-                                    "lastMsgId": "MSG123",
-                                    "quantity": 10,
-                                    "sequenceNumber": 1,
-                                    "storeCmdNumber": 1001,
-                                    "storeNumber": 101,
-                                    "traceabilityType": "E",
-                                    "lineTypeID": 1,
-                                    "groupeId": "GROUP123",
-                                    "receptionNumber": 500,
-                                    "supplier": "SupplierName",
-                                    "warehouseId": "Warehouse123",
-                                    "receptionType": "TypeA",
-                                    "freightId": "Freight123",
-                                    "height": 10.5,
-                                    "length": 20,
-                                    "volume": 300,
-                                    "weight": 150,
-                                    "width": 15,
-                                    "sku": "SKU123",
-                                    "products": [
-                                        {
-                                            "label": "Product Label",
-                                            "volume": 50,
-                                            "weight": 25,
-                                            "typology": "TYPOLOGY_GENERIC",
-                                            "state": "Réparable"
-                                        },
-                                        {
-                                            "label": "Product Label 2",
-                                            "volume": 70,
-                                            "weight": 30,
-                                            "typology": "TYPOLOGY_GENERIC",
-                                            "state": "Fonctionnel"
-                                        }
-                                    ]
-                                }
-                            }
+        "responses": {
+          "200": {
+            "description": "Packages retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "packages": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/addPackage": {
+      "post": {
+        "tags": ["Package"],
+        "summary": "Create a new package",
+        "description": "Adds a new package with associated products to the system",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "lineTypeID": {
+                    "type": "string",
+                    "description": "ID of the LineType to associate with this package",
+                    "example": "682c8740ee17de2b29c6feb2"
+                  },
+                  "traceabilityType": {
+                    "type": "string",
+                    "description": "Type of traceability",
+                    "example": "E"
+                  },
+                  "code": {
+                    "type": "string",
+                    "description": "Package code",
+                    "example": "PKG001"
+                  },
+                  "label": {
+                    "type": "string",
+                    "description": "Package label/name",
+                    "example": "Test Package"
+                  },
+                  "bareCode": {
+                    "type": "string",
+                    "description": "Barcode for the package",
+                    "example": "BAR123"
+                  },
+                  "products": {
+                    "type": "array",
+                    "description": "Array of products to create and associate with this package",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Product code",
+                          "example": "PROD001"
                         },
-                        "responses": {
-                            "200": {
-                                "description": "Package created successfully"
-                            },
-                            "400": {
-                                "description": "Invalid request, check the request body"
-                            }
+                        "label": {
+                          "type": "string",
+                          "description": "Product name/label",
+                          "example": "Test Product"
+                        },
+                        "typology": {
+                          "type": "string",
+                          "description": "Product typology",
+                          "example": "TYPOLOGY_GENERIC"
+                        },
+                        "state": {
+                          "type": "string",
+                          "description": "Product state",
+                          "example": "Fonctionnel"
+                        },
+                        "volume": {
+                          "type": "number",
+                          "description": "Product volume",
+                          "example": 10
+                        },
+                        "weight": {
+                          "type": "number",
+                          "description": "Product weight",
+                          "example": 5
                         }
+                      },
+                      "required": ["code", "label", "typology", "state"]
                     }
-                }
-            }
-        },
-        "/addTraceability": {
-            "post": {
-                "tags": ["Traceability"],
-                "summary": "Add a new traceability",
-                "description": "Add traceability information for a package.",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "litigation": {
-                                        "type": "object",
-                                        "properties": {
-                                            "comment": {
-                                                "type": "string"
-                                            },
-                                            "reason": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "Casse transport",
-                                                    "Teinte",
-                                                    "Manquant",
-                                                    "Taches"
-                                                ]
-                                            },
-                                            "traceabilityID": {
-                                                "type": "number"
-                                            },
-                                            "step": {
-                                                "type": "number"
-                                            },
-                                            "type": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "Magasin",
-                                                    "Fournisseur",
-                                                    "Livreur",
-                                                    "Entrepôt"
-                                                ]
-                                            }
-                                        },
-                                        "required": ["reason", "type"]
-                                    },
-                                    "flashingStatusId": {
-                                        "type": "number"
-                                    },
-                                    "step": {
-                                        "type": "number"
-                                    },
-                                    "chauffeurId": {
-                                        "type": "number"
-                                    },
-                                    "collabId": {
-                                        "type": "number"
-                                    },
-                                    "source": {
-                                        "type": "string",
-                                        "enum": [
-                                            "Cloture",
-                                            "Groupe",
-                                            "Forest",
-                                            "ScanLog",
-                                            "Inheritance",
-                                            "Corner",
-                                            "EDI"
-                                        ]
-                                    },
-                                    "codeRayon": {
-                                        "type": "string"
-                                    },
-                                    "comment": {
-                                        "type": "string"
-                                    },
-                                    "packageId": {
-                                        "type": "number"
-                                    }
-                                },
-                                "required": ["source"],
-                                "example": {
-                                    "litigation": {
-                                        "comment": "This is a sample comment",
-                                        "reason": "Casse transport",
-                                        "traceabilityID": 1,
-                                        "step": 2,
-                                        "type": "Magasin"
-                                    },
-                                    "flashingStatusId": 1,
-                                    "step": 3,
-                                    "chauffeurId": 123,
-                                    "collabId": 456,
-                                    "source": "Cloture",
-                                    "codeRayon": "ABCD1234",
-                                    "comment": "This is a sample comment",
-                                    "packageId": 1
-                                }
-                            }
-                        }
-                    }
+                  }
                 },
-                "responses": {
-                    "200": {
-                        "description": "traceability information added successfully"
-                    },
-                    "400": {
-                        "description": "Invalid request, check the request body"
-                    }
+                "required": ["lineTypeID", "traceabilityType", "label", "products"]
+              },
+              "examples": {
+                "packageWithProducts": {
+                  "summary": "Example package with products",
+                  "value": {
+                    "lineTypeID": "682c8740ee17de2b29c6feb2",
+                    "traceabilityType": "E",
+                    "code": "PKG001",
+                    "label": "Test Package",
+                    "bareCode": "BAR123",
+                    "products": [
+                      {
+                        "code": "PROD001",
+                        "label": "Test Product",
+                        "typology": "TYPOLOGY_GENERIC",
+                        "state": "Fonctionnel",
+                        "volume": 10,
+                        "weight": 5
+                      }
+                    ]
+                  }
                 }
+              }
             }
+          }
         },
-
-        "/GetTraceabilityByPackage/{packageId}": {
-            "get": {
-                "tags": ["Traceability"],
-                "summary": "Get traceability information by package ID",
-                "description": "Retrieve traceability information for a package based on the package ID.",
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "id",
-                        "required": true,
-                        "description": "ID of the package.",
-                        "schema": {
-                            "type": "number"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Tracability information retrieved successfully"
+        "responses": {
+          "200": {
+            "description": "Package created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "created succefully"
                     },
-                    "404": {
-                        "description": "Package not found"
-                    }
-                }
-            }
-        },
-
-        "/GetTraceabilityByUser/{userId}": {
-            "get": {
-                "tags": ["Traceability"],
-                "summary": "Get traceability information by user ID",
-                "description": "Retrieve traceability information based on the user ID.",
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "id",
-                        "required": true,
-                        "description": "ID of the user.",
-                        "schema": {
-                            "type": "number"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Tracability information retrieved successfully"
+                    "data": {
+                      "type": "object",
+                      "description": "Created package data"
                     },
-                    "404": {
-                        "description": "User not found"
+                    "packages": {
+                      "type": "array",
+                      "description": "List of all packages",
+                      "items": {
+                        "type": "object"
+                      }
                     }
+                  }
                 }
+              }
             }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
+      }
     },
-    "components": {}
+    "/products/byIds": {
+      "post": {
+        "tags": ["Package"],
+        "summary": "Get products by IDs",
+        "description": "Retrieves product details for a list of product IDs",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "description": "Array of product IDs to retrieve",
+                "items": {
+                  "type": "string",
+                  "description": "MongoDB ObjectId of the product",
+                  "example": "682c896b867044c82cf99cf6"
+                }
+              },
+              "examples": {
+                "singleProduct": {
+                  "summary": "Single product request",
+                  "value": ["682c896b867044c82cf99cf6"]
+                },
+                "multipleProducts": {
+                  "summary": "Multiple products request",
+                  "value": ["682c896b867044c82cf99cf6", "682c896b867044c82cf99cf7"]
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Products retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "description": "Array of retrieved products",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "description": "Product ID",
+                            "example": "682c896b867044c82cf99cf6"
+                          },
+                          "id": {
+                            "type": "number",
+                            "description": "Numeric product identifier",
+                            "example": 148
+                          },
+                          "code": {
+                            "type": "string",
+                            "description": "Product code",
+                            "example": "PROD001"
+                          },
+                          "label": {
+                            "type": "string",
+                            "description": "Product name/label",
+                            "example": "Test Product"
+                          },
+                          "typology": {
+                            "type": "string",
+                            "description": "Product typology",
+                            "example": "TYPOLOGY_GENERIC"
+                          },
+                          "state": {
+                            "type": "string",
+                            "description": "Product state",
+                            "example": "Fonctionnel"
+                          },
+                          "volume": {
+                            "type": "number",
+                            "description": "Product volume",
+                            "example": 10
+                          },
+                          "weight": {
+                            "type": "number",
+                            "description": "Product weight",
+                            "example": 5
+                          },
+                          "packageId": {
+                            "type": "string",
+                            "description": "ID of the associated package",
+                            "example": "682c896b867044c82cf99cf9"
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "Creation timestamp",
+                            "example": "2025-05-20T13:53:47.946Z"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "Last update timestamp",
+                            "example": "2025-05-20T13:53:47.946Z"
+                          }
+                        }
+                      }
+                    },
+                    "products": {
+                      "type": "array",
+                      "description": "Duplicate of data array (maintained for backwards compatibility)",
+                      "items": {
+                        "$ref": "#/components/schemas/Product"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "productResponse": {
+                    "summary": "Example product response",
+                    "value": {
+                      "data": [
+                        {
+                          "_id": "682c896b867044c82cf99cf6",
+                          "id": 148,
+                          "deletedAt": null,
+                          "code": "PROD001",
+                          "label": "Test Product",
+                          "volume": 10,
+                          "weight": 5,
+                          "typology": "TYPOLOGY_GENERIC",
+                          "state": "Fonctionnel",
+                          "createdAt": "2025-05-20T13:53:47.946Z",
+                          "updatedAt": "2025-05-20T13:53:47.946Z",
+                          "__v": 0,
+                          "packageId": "682c896b867044c82cf99cf9"
+                        }
+                      ],
+                      "products": [
+                        {
+                          "_id": "682c896b867044c82cf99cf6",
+                          "id": 148,
+                          "deletedAt": null,
+                          "code": "PROD001",
+                          "label": "Test Product",
+                          "volume": 10,
+                          "weight": 5,
+                          "typology": "TYPOLOGY_GENERIC",
+                          "state": "Fonctionnel",
+                          "createdAt": "2025-05-20T13:53:47.946Z",
+                          "updatedAt": "2025-05-20T13:53:47.946Z",
+                          "__v": 0,
+                          "packageId": "682c896b867044c82cf99cf9"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/upload": {
+      "post": {
+        "tags": ["Picture"],
+        "summary": "Upload a picture",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Picture uploaded successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fileName": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/download/{fileName}": {
+      "get": {
+        "tags": ["Picture"],
+        "summary": "Download a picture",
+        "parameters": [
+          {
+            "name": "fileName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "File name"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Picture downloaded successfully",
+            "content": {
+              "image/*": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/addTraceability": {
+      "post": {
+        "tags": ["Traceability"],
+        "summary": "Add traceability",
+        "description": "Adds a new traceability record linking a package to a user at a specific timestamp and step. Note: This endpoint may return internal server errors. For a more reliable alternative, use the generic `/create/traceability` endpoint.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "packageId": {
+                    "type": "string",
+                    "description": "MongoDB ObjectId of the package",
+                    "example": "682bd9532d0a3fac3820945e"
+                  },
+                  "userId": {
+                    "type": "string",
+                    "description": "ID of the user who flashed the package",
+                    "example": "682c9035a2d1cdaf5494a729"
+                  },
+                  "flashedAt": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Timestamp when the package was flashed",
+                    "example": "2025-05-20T14:30:00.000Z"
+                  },
+                  "step": {
+                    "type": "integer",
+                    "description": "Step number (1-7)",
+                    "minimum": 1,
+                    "maximum": 7,
+                    "example": 1
+                  },
+                  "flashingStatusId": {
+                    "type": "integer",
+                    "description": "ID of the flashing status",
+                    "example": 1
+                  },
+                  "source": {
+                    "type": "string",
+                    "description": "Source of the traceability",
+                    "enum": ["Cloture", "Groupe", "Forest", "ScanLog", "Inheritance", "Corner"],
+                    "example": "Cloture"
+                  },
+                  "chauffeurId": {
+                    "type": "integer",
+                    "description": "ID of the driver",
+                    "example": 123
+                  },
+                  "collabId": {
+                    "type": "integer",
+                    "description": "ID of the collaborator",
+                    "example": 456
+                  },
+                  "codeRayon": {
+                    "type": "string",
+                    "description": "Code of the shelf",
+                    "example": "R001"
+                  },
+                  "comment": {
+                    "type": "string",
+                    "description": "Optional comment",
+                    "example": "Package received in good condition"
+                  },
+                  "litigation": {
+                    "type": "object",
+                    "description": "Litigation information if required",
+                    "example": {}
+                  }
+                },
+                "required": ["packageId", "step", "source"]
+              },
+              "examples": {
+                "traceabilityExample": {
+                  "summary": "Example traceability record",
+                  "value": {
+                    "packageId": "682bd9532d0a3fac3820945e",
+                    "step": 1,
+                    "source": "Cloture",
+                    "flashingStatusId": 1,
+                    "flashedAt": "2025-05-20T14:30:00.000Z"
+                  }
+                },
+                "alternativeExample": {
+                  "summary": "Alternative working example using /create/traceability",
+                  "description": "This example can be used with the generic `/create/traceability` endpoint which is more reliable",
+                  "value": {
+                    "packageId": "682bd9532d0a3fac3820945e",
+                    "step": 3,
+                    "flashingStatusId": 1,
+                    "source": "Cloture",
+                    "chauffeurId": 123,
+                    "collabId": 456,
+                    "flashedAt": "2025-05-20T14:30:00.000Z",
+                    "codeRayon": "R001",
+                    "comment": "Added via generic create endpoint"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Traceability added successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Traceability"
+                },
+                "examples": {
+                  "successResponse": {
+                    "summary": "Success response example",
+                    "value": {
+                      "_id": "682c9abc867044c82cf99d10",
+                      "packageId": "682bd9532d0a3fac3820945e",
+                      "userId": "682c9035a2d1cdaf5494a729",
+                      "flashedAt": "2025-05-20T14:30:00.000Z",
+                      "step": 1,
+                      "flashingStatusId": 1,
+                      "source": "Cloture",
+                      "createdAt": "2025-05-20T14:30:01.982Z",
+                      "updatedAt": "2025-05-20T14:30:01.982Z"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/GetTraceabilityByPackage/{packageId}": {
+      "get": {
+        "tags": ["Traceability"],
+        "summary": "Get traceabilities by package ID",
+        "parameters": [
+          {
+            "name": "packageId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Package ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Traceabilities retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/GetTraceabilityByUser/{userId}": {
+      "get": {
+        "tags": ["Traceability"],
+        "summary": "Get traceabilities by user ID",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "User ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Traceabilities retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/getTraceabilityByFlashinDate/{flashedAt}": {
+      "get": {
+        "tags": ["Traceability"],
+        "summary": "Get traceabilities by flashing date",
+        "parameters": [
+          {
+            "name": "flashedAt",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Flashing date"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Traceabilities retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/GetLineTypeByCode/{code}": {
+      "get": {
+        "tags": ["LineType"],
+        "summary": "Get line type by code",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Line type code"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Line type retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Package": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "lineTypeID": {
+            "type": "string"
+          },
+          "products": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Product": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "packageId": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Traceability": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "packageId": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "flashedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "LineType": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "object"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
 }

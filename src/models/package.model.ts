@@ -18,7 +18,7 @@ export interface PackageDocument extends Document {
     storeCmdNumber: number;
     storeNumber: number;
     traceabilityType: typeof TraceabilityTypeEnum;
-    lineTypeID: mongoose.Schema.Types.ObjectId;
+    lineTypeID: mongoose.Schema.Types.ObjectId | number;
     groupeId: string;
     receptionNumber: number;
     supplier: string;
@@ -54,7 +54,10 @@ const packageSchema = new mongoose.Schema<PackageDocument>({
         enum: Object.values(TraceabilityTypeEnum),
         required: true
     },
-    lineTypeID: { type: mongoose.Schema.Types.ObjectId, ref: 'LineType' },
+    lineTypeID: { 
+        type: mongoose.Schema.Types.Mixed, 
+        ref: 'LineType' 
+    },
     groupeId: String,
     receptionNumber: Number,
     supplier: String,
@@ -75,30 +78,34 @@ const packageSchema = new mongoose.Schema<PackageDocument>({
 
 export function validation(Package) {
     const schema = Joi.object({
-        id: Joi.number(),
-        bareCode: Joi.string(),
-        code: Joi.string(),
-        codeCourse: Joi.number(),
-        label: Joi.string(),
-        lastMsgId: Joi.string(),
-        quantity: Joi.number(),
-        sequenceNumber: Joi.number(),
-        storeCmdNumber: Joi.number(),
-        storeNumber: Joi.number(),
+        id: Joi.number().optional(),
+        bareCode: Joi.string().optional(),
+        code: Joi.string().optional(),
+        codeCourse: Joi.string().optional(),
+        label: Joi.string().optional(),
+        lastMsgId: Joi.string().optional(),
+        quantity: Joi.number().optional(),
+        sequenceNumber: Joi.number().optional(),
+        storeCmdNumber: Joi.number().optional(),
+        storeNumber: Joi.number().optional(),
         traceabilityType: Joi.string().valid('E', 'F', 'P').default('E'),
-        lineTypeID: Joi.number(),
-        groupeId: Joi.string(),
-        receptionNumber: Joi.number(),
-        supplier: Joi.string(),
-        warehouseId: Joi.string(),
-        receptionType: Joi.string(),
-        freightId: Joi.string(),
-        height: Joi.number(),
-        length: Joi.number(),
-        volume: Joi.number(),
-        weight: Joi.number(),
-        width: Joi.number(),
-        sku: Joi.string()
+        lineTypeID: Joi.alternatives().try(
+            Joi.string().pattern(/^[0-9a-fA-F]{24}$/),
+            Joi.number()
+        ),
+        groupeId: Joi.string().optional(),
+        receptionNumber: Joi.number().optional(),
+        supplier: Joi.string().optional(),
+        warehouseId: Joi.string().optional(),
+        receptionType: Joi.string().optional(),
+        freightId: Joi.string().optional(),
+        height: Joi.number().optional(),
+        length: Joi.number().optional(),
+        volume: Joi.number().optional(),
+        weight: Joi.number().optional(),
+        width: Joi.number().optional(),
+        sku: Joi.string().optional(),
+        products: Joi.array().items(Joi.object()).optional()
     });
     return schema.validate(Package);
 }

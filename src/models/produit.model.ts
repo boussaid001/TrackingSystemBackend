@@ -38,23 +38,23 @@ const ProductSchema = new mongoose.Schema<ProductDoc>({
 
 export function validationt(product) {
     const schema = Joi.object({
-        id: Joi.number(),
-        code: Joi.string(),
-        label: Joi.string(),
-        volume: Joi.number(),
-        weight: Joi.number(),
-        packageId: Joi.string(),
+        id: Joi.number().optional(),
+        code: Joi.string().required(),
+        label: Joi.string().required(),
+        volume: Joi.number().optional(),
+        weight: Joi.number().optional(),
+        packageId: Joi.string().optional(),
         typology: Joi.string()
             .valid(
-                'TUPOLOGY_GENERIC',
-                'TUPOLOGY_FRESH',
-                'TUPOLOGY_FROZEN',
-                'TUPOLOGY_DANGEROUS',
-                'TUPOLOGY_VOLUMINOUS',
-                'TUPOLOGY_FRAGILE',
-                'TUPOLOGY_VOLUMINOUS_FRAGILE'
+                'TYPOLOGY_GENERIC',
+                'TYPOLOGY_FRESH',
+                'TYPOLOGY_FROZEN',
+                'TYPOLOGY_DANGEROUS',
+                'TYPOLOGY_VOLUMINOUS',
+                'TYPOLOGY_FRAGILE',
+                'TYPOLOGY_VOLUMINOUS_FRAGILE'
             )
-            .default('TUPOLOGY_GENERIC'),
+            .default('TYPOLOGY_GENERIC'),
         state: Joi.string()
             .valid(
                 'Fonctionnel',

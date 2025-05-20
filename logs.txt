@@ -1,0 +1,26 @@
+back-node-app-1  | (node:1) NOTE: The AWS SDK for JavaScript (v2) will enter maintenance mode
+back-node-app-1  | on September 8, 2024 and reach end-of-support on September 8, 2025.
+back-node-app-1  | 
+back-node-app-1  | Please migrate your code to use AWS SDK for JavaScript (v3).
+back-node-app-1  | For more information, check blog post at https://a.co/cUPnyil
+back-node-app-1  | (Use `node --trace-warnings ...` to show where the warning was created)
+back-node-app-1  | Connect to mongo DB successfully 🚀
+back-node-app-1  | ****************************************
+back-node-app-1  | 
+back-node-app-1  | 
+back-node-app-1  |  ====> App running on port 5000
+back-node-app-1  | 
+back-node-app-1  | ****************************************
+back-node-app-1  | (node:1) NOTE: The AWS SDK for JavaScript (v2) will enter maintenance mode
+back-node-app-1  | on September 8, 2024 and reach end-of-support on September 8, 2025.
+back-node-app-1  | 
+back-node-app-1  | Please migrate your code to use AWS SDK for JavaScript (v3).
+back-node-app-1  | For more information, check blog post at https://a.co/cUPnyil
+back-node-app-1  | (Use `node --trace-warnings ...` to show where the warning was created)
+back-node-app-1  | Connect to mongo DB successfully 🚀
+back-node-app-1  | ****************************************
+back-node-app-1  | 
+back-node-app-1  | 
+back-node-app-1  |  ====> App running on port 5000
+back-node-app-1  | 
+back-node-app-1  | ****************************************
