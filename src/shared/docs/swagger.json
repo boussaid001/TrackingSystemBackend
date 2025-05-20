@@ -850,6 +850,7 @@
       "post": {
         "tags": ["Picture"],
         "summary": "Upload a picture",
+        "description": "Uploads a picture file to the server. The picture is stored in AWS S3 and the metadata is saved in the database.",
         "requestBody": {
           "content": {
             "multipart/form-data": {
@@ -858,9 +859,11 @@
                 "properties": {
                   "file": {
                     "type": "string",
-                    "format": "binary"
+                    "format": "binary",
+                    "description": "The image file to upload"
                   }
-                }
+                },
+                "required": ["file"]
               }
             }
           },
@@ -874,8 +877,51 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "fileName": {
-                      "type": "string"
+                    "message": {
+                      "type": "string",
+                      "example": "Picture uploaded successfully"
+                    },
+                    "picture": {
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string",
+                          "example": "682c9264c5af900c8ce26137"
+                        },
+                        "url": {
+                          "type": "string",
+                          "example": "https://s3-bucket-name.amazonaws.com/image.jpg"
+                        },
+                        "fileName": {
+                          "type": "string",
+                          "example": "image.jpg"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2025-05-20T14:30:00.000Z"
+                        },
+                        "updatedAt": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2025-05-20T14:30:00.000Z"
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "successResponse": {
+                    "summary": "Success response example",
+                    "value": {
+                      "message": "Picture uploaded successfully",
+                      "picture": {
+                        "_id": "682c9264c5af900c8ce26137",
+                        "url": "https://packages-pfe.s3.amazonaws.com/image.jpg",
+                        "fileName": "image.jpg",
+                        "createdAt": "2025-05-20T14:30:00.000Z",
+                        "updatedAt": "2025-05-20T14:30:00.000Z"
+                      }
                     }
                   }
                 }
@@ -889,24 +935,62 @@
                 "schema": {
                   "type": "object",
                   "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Error uploading picture"
+                    },
                     "error": {
                       "type": "object"
-                    },
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
                     "message": {
-                      "type": "string"
+                      "type": "string",
+                      "example": "Error saving picture to database"
+                    },
+                    "error": {
+                      "type": "object"
+                    }
+                  }
+                },
+                "examples": {
+                  "errorResponse": {
+                    "summary": "Error response example",
+                    "value": {
+                      "message": "Error saving picture to database",
+                      "error": {
+                        "message": "Missing credentials in config"
+                      }
                     }
                   }
                 }
               }
             }
           }
-        }
+        },
+        "x-code-samples": [
+          {
+            "lang": "curl",
+            "source": "curl -X POST -F \"file=@/path/to/image.jpg\" http://localhost:5000/upload"
+          }
+        ]
       }
     },
     "/download/{fileName}": {
       "get": {
         "tags": ["Picture"],
         "summary": "Download a picture",
+        "description": "Downloads a picture file from the server. The picture is retrieved from AWS S3 using the fileName parameter.",
         "parameters": [
           {
             "name": "fileName",
@@ -915,7 +999,8 @@
             "schema": {
               "type": "string"
             },
-            "description": "File name"
+            "description": "File name of the picture to download",
+            "example": "image.jpg"
           }
         ],
         "responses": {
@@ -947,8 +1032,47 @@
                 }
               }
             }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Error downloading picture from S3"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Picture does not exist"
+                    }
+                  }
+                },
+                "examples": {
+                  "errorResponse": {
+                    "summary": "Error response example",
+                    "value": {
+                      "message": "Error downloading picture from S3",
+                      "error": "Picture does not exist"
+                    }
+                  }
+                }
+              }
+            }
           }
-        }
+        },
+        "x-code-samples": [
+          {
+            "lang": "curl",
+            "source": "curl -X GET http://localhost:5000/download/image.jpg --output downloaded_image.jpg"
+          },
+          {
+            "lang": "browser",
+            "source": "http://localhost:5000/download/image.jpg"
+          }
+        ]
       }
     },
     "/addTraceability": {
